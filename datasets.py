@@ -31,6 +31,19 @@ synsetid_to_cate = {
 }
 cate_to_synsetid = {v: k for k, v in synsetid_to_cate.items()}
 
+class ProteinData(Dataset):
+    def __init__(self, root_dir):
+        self.root_dir = root_dir
+
+        #load the filenames
+        self.fnames = os.listdir(self.root_dir)
+
+    def __len__(self):
+        return len(self.fnames)
+
+    def __getitem__(self, idx):
+        return np.load(os.path.join(self.root_dir, self.fnames[idx]))
+
 
 class Uniform15KPC(Dataset):
     def __init__(self, root_dir, subdirs, tr_sample_size=10000,
@@ -386,4 +399,3 @@ if __name__ == "__main__":
     x_tr, x_te = next(iter(shape_ds))
     print(x_tr.shape)
     print(x_te.shape)
-

@@ -65,29 +65,9 @@ def add_args(parser):
     parser.add_argument('--exp_decay_freq', type=int, default=1,
                         help='Learning rate exponential decay frequency')
 
+
     # data options
-    parser.add_argument('--dataset_type', type=str, default="shapenet15k",
-                        help="Dataset types.", choices=['shapenet15k', 'modelnet40_15k', 'modelnet10_15k'])
-    parser.add_argument('--cates', type=str, nargs='+', default=["airplane"],
-                        help="Categories to be trained (useful only if 'shapenet' is selected)")
-    parser.add_argument('--data_dir', type=str, default="data/ShapeNetCore.v2.PC15k",
-                        help="Path to the training data")
-    parser.add_argument('--mn40_data_dir', type=str, default="data/ModelNet40.PC15k",
-                        help="Path to ModelNet40")
-    parser.add_argument('--mn10_data_dir', type=str, default="data/ModelNet10.PC15k",
-                        help="Path to ModelNet10")
-    parser.add_argument('--dataset_scale', type=float, default=1.,
-                        help='Scale of the dataset (x,y,z * scale = real output, default=1).')
-    parser.add_argument('--random_rotate', action='store_true',
-                        help='Whether to randomly rotate each shape.')
-    parser.add_argument('--normalize_per_shape', action='store_true',
-                        help='Whether to perform normalization per shape.')
-    parser.add_argument('--normalize_std_per_axis', action='store_true',
-                        help='Whether to perform normalization per axis.')
-    parser.add_argument("--tr_max_sample_points", type=int, default=2048,
-                        help='Max number of sampled points (train)')
-    parser.add_argument("--te_max_sample_points", type=int, default=2048,
-                        help='Max number of sampled points (test)')
+    parser.add_argument('--data_dir', type=str, help='data directory')
     parser.add_argument('--num_workers', type=int, default=4,
                         help='Number of data loading threads')
 
@@ -97,18 +77,6 @@ def add_args(parser):
     parser.add_argument('--val_freq', type=int, default=10)
     parser.add_argument('--log_freq', type=int, default=10)
     parser.add_argument('--save_freq', type=int, default=10)
-
-    # validation options
-    parser.add_argument('--no_validation', action='store_true',
-                        help='Whether to disable validation altogether.')
-    parser.add_argument('--save_val_results', action='store_true',
-                        help='Whether to save the validation results.')
-    parser.add_argument('--eval_classification', action='store_true',
-                        help='Whether to evaluate classification accuracy on MN40 and MN10.')
-    parser.add_argument('--no_eval_sampling', action='store_true',
-                        help='Whether to evaluate sampling.')
-    parser.add_argument('--max_validate_shapes', type=int, default=None,
-                        help='Max number of shapes used for validation pass.')
 
     # resuming
     parser.add_argument('--resume_checkpoint', type=str, default=None,
@@ -123,29 +91,8 @@ def add_args(parser):
                         help='Path to the file storing the dataset std.')
 
     # distributed training
-    parser.add_argument('--world_size', default=1, type=int,
-                        help='Number of distributed nodes.')
-    parser.add_argument('--dist_url', default='tcp://127.0.0.1:9991', type=str,
-                        help='url used to set up distributed training')
-    parser.add_argument('--dist_backend', default='nccl', type=str,
-                        help='distributed backend')
-    parser.add_argument('--distributed', action='store_true',
-                        help='Use multi-processing distributed training to launch '
-                             'N processes per node, which has N GPUs. This is the '
-                             'fastest way to use PyTorch for either single node or '
-                             'multi node data parallel training')
-    parser.add_argument('--rank', default=0, type=int,
-                        help='node rank for distributed training')
     parser.add_argument('--gpu', default=None, type=int,
                         help='GPU id to use. None means using all available GPUs.')
-
-    # Evaluation options
-    parser.add_argument('--evaluate_recon', default=False, action='store_true',
-                        help='Whether set to the evaluation for reconstruction.')
-    parser.add_argument('--num_sample_shapes', default=10, type=int,
-                        help='Number of shapes to be sampled (for demo.py).')
-    parser.add_argument('--num_sample_points', default=2048, type=int,
-                        help='Number of points (per-shape) to be sampled (for demo.py).')
 
     return parser
 
